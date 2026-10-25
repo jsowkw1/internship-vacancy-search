@@ -1,0 +1,22 @@
+flowchart LR
+    seeker[Student / recent graduate]
+    employer[Employer]
+    mod[Moderator]
+    subgraph system[Internship and vacancy search system]
+      browse([Browse opportunities])
+      search([Search and filter])
+      detail([View details and match explanation])
+      save([Save opportunity])
+      apply([Open original application link])
+      submit([Submit opportunity])
+      moderate([Approve, reject, expire listing])
+      report([Report inaccurate listing])
+    end
+    seeker --- browse
+    seeker --- search
+    seeker --- detail
+    seeker --- save
+    seeker --- apply
+    seeker --- report
+    employer --- submit
+    mod --- moderate

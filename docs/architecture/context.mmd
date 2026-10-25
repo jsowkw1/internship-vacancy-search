@@ -1,0 +1,13 @@
+flowchart LR
+    seeker[Student / recent graduate]
+    employer[Employer]
+    moderator[Moderator / administrator]
+    source[Authorized source or manual curation]
+    app((Internship and vacancy search web app))
+    external[Original application destination]
+    seeker -->|search, filter, save| app
+    app -->|results and fit explanation| seeker
+    employer -->|submit opportunity| app
+    moderator -->|review, approve, expire| app
+    source -->|authorized records + attribution| app
+    app -->|source URL| external
