@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Локальный демонстрационный макет поиска стажировок и вакансий для студентов и начинающих специалистов.">
+  <title>StartPath — стажировки и вакансии</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172b4d;
+      --muted: #536579;
+      --line: #dce5ee;
+      --canvas: #f4f7fb;
+      --white: #fff;
+      --blue: #175cd3;
+      --blue-dark: #1045a8;
+      --mint: #d8f3e8;
+      --mint-ink: #145c43;
+      --amber: #fff0c2;
+      --amber-ink: #6b4b00;
+      --shadow: 0 12px 35px rgba(23, 43, 77, .08);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--canvas); line-height: 1.5; }
+    button, input, select { font: inherit; }
+    button, select, input { min-height: 44px; }
+    a { color: var(--blue); }
+    .topbar { background: var(--white); border-bottom: 1px solid var(--line); }
+    .topbar-inner, main, footer { width: min(1180px, calc(100% - 40px)); margin: auto; }
+    .topbar-inner { display: flex; align-items: center; justify-content: space-between; min-height: 72px; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; font-weight: 800; letter-spacing: -.02em; font-size: 1.15rem; }
+    .brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; color: #fff; background: var(--blue); font-weight: 800; }
+    .nav { display: flex; gap: 22px; align-items: center; }
+    .nav a { text-decoration: none; color: var(--muted); font-weight: 600; }
+    .nav a:hover, .nav a:focus-visible { color: var(--blue-dark); text-decoration: underline; }
+    main { padding: 38px 0 64px; }
+    .hero { display: grid; grid-template-columns: 1fr minmax(220px, 310px); gap: 26px; align-items: end; margin-bottom: 26px; }
+    .eyebrow { color: var(--blue-dark); text-transform: uppercase; font-size: .76rem; font-weight: 800; letter-spacing: .12em; margin: 0 0 8px; }
+    h1 { font-size: clamp(2rem, 4vw, 3.15rem); line-height: 1.06; letter-spacing: -.04em; max-width: 720px; margin: 0; }
+    .hero p { color: var(--muted); max-width: 670px; margin: 14px 0 0; }
+    .hero-stat { background: var(--white); border: 1px solid var(--line); border-radius: 18px; padding: 18px; box-shadow: var(--shadow); }
+    .hero-stat strong { display: block; font-size: 1.05rem; margin-bottom: 5px; }
+    .hero-stat span { color: var(--muted); font-size: .9rem; }
+    .demo-banner { display: flex; gap: 12px; align-items: flex-start; background: var(--amber); color: var(--amber-ink); border: 1px solid #f1d97e; padding: 12px 16px; border-radius: 12px; margin: 0 0 22px; }
+    .demo-banner strong { white-space: nowrap; }
+    .search-panel { background: var(--white); border: 1px solid var(--line); border-radius: 18px; padding: 20px; box-shadow: var(--shadow); }
+    .search-row { display: grid; grid-template-columns: 1fr 210px auto; gap: 12px; }
+    label { display: block; font-size: .83rem; color: var(--muted); font-weight: 700; margin: 0 0 6px; }
+    input[type="search"], input[type="text"], select { width: 100%; border: 1px solid #bfccda; border-radius: 10px; padding: 10px 12px; color: var(--ink); background: #fff; }
+    input:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid #84adff; outline-offset: 2px; }
+    .search-button, .reset-button, .save-button, .details-button { border-radius: 10px; padding: 9px 16px; font-weight: 700; cursor: pointer; }
+    .search-button { align-self: end; border: 1px solid var(--blue); color: #fff; background: var(--blue); min-width: 126px; }
+    .search-button:hover { background: var(--blue-dark); }
+    .filter-row { display: grid; grid-template-columns: repeat(4, 1fr) auto; gap: 12px; align-items: end; margin-top: 14px; }
+    .filter-check { display: flex; align-items: center; gap: 9px; min-height: 44px; margin: 0; color: var(--ink); font-weight: 600; }
+    .filter-check input { width: 18px; height: 18px; accent-color: var(--blue); }
+    .reset-button { border: 1px solid var(--line); color: var(--ink); background: #fff; }
+    .reset-button:hover { background: #f6f8fb; }
+    .result-bar { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin: 28px 0 14px; }
+    .result-bar h2 { font-size: 1.3rem; margin: 0; }
+    .result-count { color: var(--muted); font-size: .9rem; margin: 3px 0 0; }
+    .sort-control { width: min(245px, 45vw); }
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 275px; gap: 20px; align-items: start; }
+    .cards { display: grid; gap: 14px; }
+    .card { background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 18px; box-shadow: 0 5px 18px rgba(23,43,77,.04); }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+    .card h3 { font-size: 1.15rem; line-height: 1.25; margin: 0 0 5px; }
+    .company { color: var(--muted); margin: 0; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin: 13px 0; }
+    .tag { font-size: .78rem; font-weight: 700; color: #334b68; background: #edf2f8; border-radius: 999px; padding: 4px 9px; }
+    .tag.kind { background: var(--mint); color: var(--mint-ink); }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 7px 18px; color: var(--muted); font-size: .88rem; }
+    .fit { margin-top: 14px; padding: 10px 12px; background: #f5f8ff; border-left: 3px solid var(--blue); border-radius: 6px 10px 10px 6px; font-size: .88rem; }
+    .fit strong { color: var(--blue-dark); }
+    .card-actions { display: flex; gap: 9px; flex-wrap: wrap; margin-top: 15px; }
+    .details-button { background: var(--blue); border: 1px solid var(--blue); color: #fff; }
+    .details-button:hover { background: var(--blue-dark); }
+    .save-button { background: #fff; border: 1px solid #9fb0c4; color: var(--ink); }
+    .save-button[aria-pressed="true"] { border-color: #9a7310; background: #fff8df; color: #5e4300; }
+    .source-note { color: var(--muted); font-size: .79rem; margin: 11px 0 0; }
+    .side-card { background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+    .side-card h2 { font-size: 1rem; margin: 0 0 9px; }
+    .side-card p { color: var(--muted); font-size: .88rem; margin: 0 0 11px; }
+    .skill-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-chip { border: 1px solid #b8c7d9; background: #fff; border-radius: 999px; padding: 7px 11px; color: var(--ink); font-size: .82rem; font-weight: 650; cursor: pointer; }
+    .skill-chip[aria-pressed="true"] { background: #eaf1ff; border-color: #7da6ea; color: #174a9b; }
+    .side-note { border-top: 1px solid var(--line); margin-top: 15px !important; padding-top: 13px; }
+    .empty { background: #fff; border: 1px dashed #a9bacd; border-radius: 14px; text-align: center; padding: 32px 18px; color: var(--muted); }
+    .empty strong { display: block; color: var(--ink); margin-bottom: 5px; }
+    footer { padding: 20px 0 28px; color: var(--muted); font-size: .84rem; border-top: 1px solid var(--line); }
+    dialog { width: min(620px, calc(100% - 30px)); border: 1px solid var(--line); border-radius: 18px; padding: 0; box-shadow: 0 22px 80px rgba(17,31,55,.25); color: var(--ink); }
+    dialog::backdrop { background: rgba(17,31,55,.42); }
+    .dialog-inner { padding: 22px; }
+    .dialog-head { display: flex; justify-content: space-between; gap: 16px; }
+    .dialog-head h2 { margin: 0; font-size: 1.35rem; }
+    .close-button { border: 1px solid var(--line); border-radius: 8px; background: #fff; min-width: 42px; cursor: pointer; }
+    .dialog-body { color: var(--muted); }
+    .dialog-section { border-top: 1px solid var(--line); padding-top: 13px; margin-top: 14px; }
+    .dialog-section h3 { color: var(--ink); font-size: .94rem; margin: 0 0 7px; }
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-stat { max-width: 410px; }
+      .layout { grid-template-columns: 1fr; }
+      .side-card { order: -1; }
+    }
+    @media (max-width: 650px) {
+      .topbar-inner, main, footer { width: min(100% - 28px, 1180px); }
+      .topbar-inner { min-height: 64px; }
+      .nav { gap: 12px; font-size: .85rem; }
+      .nav a:first-child { display: none; }
+      main { padding-top: 28px; }
+      .search-row, .filter-row { grid-template-columns: 1fr; }
+      .search-button { width: 100%; }
+      .result-bar { align-items: stretch; flex-direction: column; }
+      .sort-control { width: 100%; }
+      .demo-banner { display: block; }
+      .demo-banner strong { display: block; margin-bottom: 2px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="StartPath, на главную"><span class="brand-mark" aria-hidden="true">S</span><span>StartPath</span></a>
+      <nav class="nav" aria-label="Основная навигация">
+        <a href="#search">Поиск</a>
+        <a href="#saved" id="savedNav">Сохранённое <span id="savedNavCount">0</span></a>
+        <a href="#about">О проекте</a>
+      </nav>
+    </div>
+  </header>
+  <main id="top">
+    <section class="hero" aria-labelledby="pageTitle">
+      <div>
+        <p class="eyebrow">Первый шаг в карьере</p>
+        <h1 id="pageTitle">Стажировки и вакансии в одном поиске</h1>
+        <p>Сравнивайте возможности по навыкам, формату работы и уровню опыта. Сохраните интересные варианты и проверьте, откуда взята информация.</p>
+      </div>
+      <aside class="hero-stat" aria-label="Статус каталога">
+        <strong>Каталог для начинающих специалистов</strong>
+        <span>Показываем источник и дату каждой публикации</span>
+      </aside>
+    </section>
+
+    <div class="demo-banner" role="note">
+      <strong>Демо-данные</strong>
+      <span>Все карточки ниже вымышлены для демонстрации макета. Это не актуальные вакансии, откликнуться на них нельзя.</span>
+    </div>
+
+    <section class="search-panel" id="search" aria-label="Поиск и фильтры">
+      <div class="search-row">
+        <div>
+          <label for="query">Должность, компания или навык</label>
+          <input id="query" type="search" placeholder="Например, frontend или Python" autocomplete="off">
+        </div>
+        <div>
+          <label for="location">Город или формат</label>
+          <input id="location" type="text" placeholder="Любой город" autocomplete="off">
+        </div>
+        <button class="search-button" id="searchButton" type="button">Найти варианты</button>
+      </div>
+      <div class="filter-row">
+        <div>
+          <label for="kind">Тип возможности</label>
+          <select id="kind"><option value="all">Все варианты</option><option value="internship">Стажировка</option><option value="entry">Начало карьеры</option></select>
+        </div>
+        <div>
+          <label for="schedule">График</label>
+          <select id="schedule"><option value="all">Любой график</option><option>Гибкий</option><option>Частичная занятость</option><option>Полный день</option></select>
+        </div>
+        <div>
+          <label for="sort">Сортировка</label>
+          <select id="sort"><option value="fit">Сначала подходящие</option><option value="new">Сначала новые</option></select>
+        </div>
+        <label class="filter-check"><input id="remoteOnly" type="checkbox"> Удалённо</label>
+        <button class="reset-button" id="resetButton" type="button">Сбросить</button>
+      </div>
+    </section>
+
+    <div class="result-bar">
+      <div><h2 id="resultsHeading">Возможности для вас</h2><p class="result-count" id="resultCount" aria-live="polite"></p></div>
+      <label class="filter-check"><input id="savedOnly" type="checkbox"> Только сохранённые</label>
+    </div>
+
+    <div class="layout">
+      <section class="cards" id="cards" aria-label="Результаты поиска"></section>
+      <aside class="side-card" aria-labelledby="profileHeading">
+        <h2 id="profileHeading">Профиль для объяснения совпадения</h2>
+        <p>Выберите навыки, которые хотите учитывать. Макет показывает простое совпадение, а не прогноз найма.</p>
+        <div class="skill-list" id="skillList" aria-label="Мои навыки"></div>
+        <p class="side-note">Ни пол, ни возраст и другие чувствительные характеристики не используются в демонстрационном расчёте.</p>
+      </aside>
+    </div>
+
+    <section id="about" class="side-card" style="margin-top:20px">
+      <h2>О проекте</h2>
+      <p>Это интерактивный UX-макет дипломного проекта. Реальные источники вакансий, аккаунты и отправка заявок пока не подключены. Записи помечены как демонстрационные.</p>
+    </section>
+  </main>
+  <footer>StartPath · макет дипломного проекта · версия для обсуждения требований</footer>
+
+  <dialog id="detailsDialog" aria-labelledby="dialogTitle">
+    <div class="dialog-inner">
+      <div class="dialog-head"><h2 id="dialogTitle"></h2><button class="close-button" type="button" id="closeDialog" aria-label="Закрыть">×</button></div>
+      <div class="dialog-body" id="dialogBody"></div>
+    </div>
+  </dialog>
+
+  <script>
+    // Fictional records for interaction design only. Do not present as active vacancies.
+    const opportunities = [
+      { id: "demo-1", title: "Стажёр frontend-разработчик", company: "Northstar Studio (демо)", city: "Астана", type: "internship", mode: "Гибрид", schedule: "Гибкий", experience: "Без опыта", salary: "Не указана", date: "2026-10-20", source: "Вымышленная запись", skills: ["JavaScript", "React", "HTML/CSS"], description: "Учебный пример карточки для проверки фильтров и сценария просмотра. Запись не является открытой вакансией." },
+      { id: "demo-2", title: "Junior Python-разработчик", company: "Steppe Labs (демо)", city: "Алматы", type: "entry", mode: "Удалённо", schedule: "Полный день", experience: "0-1 год", salary: "Не указана", date: "2026-10-18", source: "Вымышленная запись", skills: ["Python", "SQL", "Git"], description: "Учебный пример записи начального уровня. Реального работодателя и отклика нет." },
+      { id: "demo-3", title: "Стажёр UX-исследователь", company: "Orda Product Team (демо)", city: "Астана", type: "internship", mode: "Гибрид", schedule: "Частичная занятость", experience: "Студент", salary: "Не указана", date: "2026-10-16", source: "Вымышленная запись", skills: ["Интервью", "Figma", "Анализ данных"], description: "Учебный пример для сценария поиска стажировки и сравнения формата работы." },
+      { id: "demo-4", title: "Начинающий аналитик данных", company: "Qadam Analytics (демо)", city: "Удалённо", type: "entry", mode: "Удалённо", schedule: "Гибкий", experience: "Без опыта", salary: "Не указана", date: "2026-10-12", source: "Вымышленная запись", skills: ["SQL", "Excel", "Python"], description: "Демонстрационная запись. Поля и правила совпадения служат только для обсуждения требований." },
+      { id: "demo-5", title: "Стажёр QA-инженер", company: "Nomad QA (демо)", city: "Шымкент", type: "internship", mode: "Офис", schedule: "Полный день", experience: "Без опыта", salary: "Не указана", date: "2026-10-10", source: "Вымышленная запись", skills: ["Тестирование", "Баг-репорты", "SQL"], description: "Вымышленная карточка для проверки фильтра по городу и списку навыков." },
+      { id: "demo-6", title: "Ассистент project manager", company: "Baiterek Digital (демо)", city: "Астана", type: "entry", mode: "Гибрид", schedule: "Частичная занятость", experience: "Студент", salary: "Не указана", date: "2026-10-08", source: "Вымышленная запись", skills: ["Коммуникация", "Trello", "Документация"], description: "Вымышленный пример роли начального уровня; внешний переход отключён." }
+    ];
+    const allSkills = ["JavaScript", "React", "Python", "SQL", "Figma", "Тестирование"];
+    const selectedSkills = new Set(["JavaScript", "React", "Python"]);
+    const saved = new Set(JSON.parse(localStorage.getItem("startpath-demo-saved") || "[]"));
+    const $ = (id) => document.getElementById(id);
+    const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char]));
+    const fitFor = (item) => {
+      const matched = item.skills.filter((skill) => selectedSkills.has(skill));
+      return { matched, total: item.skills.length };
+    };
+    function renderSkills() {
+      $("skillList").innerHTML = allSkills.map((skill) => `<button class="skill-chip" type="button" aria-pressed="${selectedSkills.has(skill)}" data-skill="${escapeHtml(skill)}">${escapeHtml(skill)}</button>`).join("");
+    }
+    function filteredItems() {
+      const query = $("query").value.trim().toLocaleLowerCase("ru");
+      const location = $("location").value.trim().toLocaleLowerCase("ru");
+      const kind = $("kind").value;
+      const schedule = $("schedule").value;
+      return opportunities.filter((item) => {
+        const haystack = [item.title, item.company, ...item.skills].join(" ").toLocaleLowerCase("ru");
+        const locationMatch = !location || item.city.toLocaleLowerCase("ru").includes(location) || item.mode.toLocaleLowerCase("ru").includes(location);
+        return (!query || haystack.includes(query)) && locationMatch && (kind === "all" || item.type === kind) && (schedule === "all" || item.schedule === schedule) && (!$("remoteOnly").checked || item.mode === "Удалённо") && (!$("savedOnly").checked || saved.has(item.id));
+      }).sort((a, b) => {
+        if ($("sort").value === "new") return b.date.localeCompare(a.date);
+        const scoreA = fitFor(a).matched.length / Math.max(fitFor(a).total, 1);
+        const scoreB = fitFor(b).matched.length / Math.max(fitFor(b).total, 1);
+        return scoreB - scoreA || b.date.localeCompare(a.date);
+      });
+    }
+    function renderCards() {
+      const items = filteredItems();
+      $("resultCount").textContent = `${items.length} ${items.length === 1 ? "демо-вариант" : "демо-вариантов"} · актуальность не проверялась`;
+      $("savedNavCount").textContent = saved.size;
+      if (!items.length) {
+        $("cards").innerHTML = `<div class="empty"><strong>Ничего не найдено</strong>Измените запрос или сбросьте часть фильтров.</div>`;
+        return;
+      }
+      $("cards").innerHTML = items.map((item) => {
+        const fit = fitFor(item);
+        const fitText = fit.matched.length ? `Совпали навыки: ${fit.matched.join(", ")}` : "Совпадений по выбранным навыкам нет";
+        return `<article class="card" aria-labelledby="title-${item.id}">
+          <div class="card-top"><div><h3 id="title-${item.id}">${escapeHtml(item.title)}</h3><p class="company">${escapeHtml(item.company)}</p></div><span class="tag kind">${item.type === "internship" ? "Стажировка" : "Начало карьеры"}</span></div>
+          <div class="tags">${item.skills.map((skill) => `<span class="tag">${escapeHtml(skill)}</span>`).join("")}</div>
+          <div class="card-meta"><span>${escapeHtml(item.city)}</span><span>${escapeHtml(item.mode)}</span><span>${escapeHtml(item.schedule)}</span><span>${escapeHtml(item.experience)}</span></div>
+          <div class="fit"><strong>Объяснение совпадения</strong><br>${escapeHtml(fitText)} · ${fit.matched.length} из ${fit.total} навыков</div>
+          <div class="card-actions"><button class="details-button" type="button" data-details="${item.id}">Подробнее</button><button class="save-button" type="button" data-save="${item.id}" aria-pressed="${saved.has(item.id)}">${saved.has(item.id) ? "Сохранено" : "Сохранить"}</button></div>
+          <p class="source-note">Источник: ${escapeHtml(item.source)} · дата в демо: ${new Date(item.date + "T12:00:00").toLocaleDateString("ru-RU")}</p>
+        </article>`;
+      }).join("");
+    }
+    function openDetails(id) {
+      const item = opportunities.find((entry) => entry.id === id);
+      if (!item) return;
+      const fit = fitFor(item);
+      $("dialogTitle").textContent = item.title;
+      $("dialogBody").innerHTML = `<p>${escapeHtml(item.company)} · ${escapeHtml(item.city)} · ${escapeHtml(item.mode)}</p>
+        <div class="dialog-section"><h3>Описание</h3><p>${escapeHtml(item.description)}</p></div>
+        <div class="dialog-section"><h3>Требования и поля</h3><p>Навыки: ${item.skills.map(escapeHtml).join(", ")}. Опыт: ${escapeHtml(item.experience)}. График: ${escapeHtml(item.schedule)}. Вознаграждение: ${escapeHtml(item.salary)}.</p></div>
+        <div class="dialog-section"><h3>Почему показан вариант</h3><p>Совпадения по выбранным навыкам: ${fit.matched.length ? fit.matched.map(escapeHtml).join(", ") : "нет"}. Это прозрачное демо-правило, а не прогноз трудоустройства.</p></div>
+        <div class="dialog-section"><h3>Источник и отклик</h3><p>Источник: ${escapeHtml(item.source)}. Вымышленная запись; внешний переход и отклик отключены.</p></div>`;
+      $("detailsDialog").showModal();
+      $("closeDialog").focus();
+    }
+    $("cards").addEventListener("click", (event) => {
+      const details = event.target.closest("[data-details]");
+      const saveButton = event.target.closest("[data-save]");
+      if (details) openDetails(details.dataset.details);
+      if (saveButton) {
+        const id = saveButton.dataset.save;
+        if (saved.has(id)) saved.delete(id); else saved.add(id);
+        localStorage.setItem("startpath-demo-saved", JSON.stringify([...saved]));
+        renderCards();
+      }
+    });
+    $("skillList").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-skill]");
+      if (!button) return;
+      const skill = button.dataset.skill;
+      if (selectedSkills.has(skill)) selectedSkills.delete(skill); else selectedSkills.add(skill);
+      renderSkills(); renderCards();
+    });
+    ["query", "location", "kind", "schedule", "remoteOnly", "sort", "savedOnly"].forEach((id) => $(id).addEventListener("input", renderCards));
+    $("searchButton").addEventListener("click", renderCards);
+    $("resetButton").addEventListener("click", () => {
+      $("query").value = ""; $("location").value = ""; $("kind").value = "all"; $("schedule").value = "all"; $("sort").value = "fit"; $("remoteOnly").checked = false; $("savedOnly").checked = false; renderCards(); $("query").focus();
+    });
+    $("savedNav").addEventListener("click", () => { $("savedOnly").checked = true; renderCards(); });
+    $("closeDialog").addEventListener("click", () => $("detailsDialog").close());
+    $("detailsDialog").addEventListener("click", (event) => { if (event.target === $("detailsDialog")) $("detailsDialog").close(); });
+    renderSkills(); renderCards();
+  </script>
+</body>
+</html>
