@@ -1,0 +1,18 @@
+ID,Summary,Assignee,Priority,Due date,Expected outcome,Acceptance criteria
+DIP-1,Create GitHub repository and give access,Жиенбек Муслим,Critical,2026-10-28,Team repo with main branch and README,Both students and supervisor have access; README links to YouTrack
+DIP-2,Set up YouTrack project and board,Сағым Мұхаммеджан,Critical,2026-10-28,Project DIP with board and all backlog tasks,Every task has assignee + priority + due date + acceptance criteria
+DIP-3,Conduct 3-5 user interviews (students/graduates),Both,Critical,2026-11-04,Anonymised interview records in docs/02,At least 3 records saved; findings separated from assumptions
+DIP-4,Get supervisor feedback on proposal and scope,Both,Critical,2026-11-04,Filled docs/11_supervisor_feedback.md,Each comment has a recorded decision/action
+DIP-5,Revise problem statement and requirements from interviews,Жиенбек Муслим,Major,2026-11-07,Updated docs/01 and docs/06,Each Must requirement traces to evidence or is marked assumption
+DIP-6,Finalize architecture diagrams (context / use case / component),Жиенбек Муслим,Major,2026-11-07,Updated .mmd sources and PNG exports,Diagrams match requirements; sources and exports committed
+DIP-7,Run prototype walkthrough with 3 users,Сағым Мұхаммеджан,Major,2026-11-11,Walkthrough notes and UI fixes list in docs/08,3 sessions recorded; top issues prioritised
+DIP-8,Define database schema and ER diagram,Жиенбек Муслим,Major,2026-11-14,PostgreSQL schema + ER diagram,Covers users/listings/employers/saves/moderation; reviewed by teammate
+DIP-9,Scaffold FastAPI backend with CI,Жиенбек Муслим,Major,2026-11-18,Runnable API skeleton with health check and tests,pytest passes in CI; README setup steps work
+DIP-10,Scaffold React + TypeScript frontend,Сағым Мұхаммеджан,Major,2026-11-18,Runnable frontend with routing and i18n (ru/kk),npm run dev starts; lint passes
+DIP-11,Implement listing catalogue and search API (FR-01..FR-04),Жиенбек Муслим,Major,2026-11-28,Search/filter/sort endpoints,Acceptance criteria FR-01..FR-04 pass in automated tests
+DIP-12,Implement search UI with filters and details (FR-01..FR-05),Сағым Мұхаммеджан,Major,2026-11-28,Search page + detail page connected to API,FR-01..FR-05 verified manually and in tests
+DIP-13,Implement auth profile and shortlist (FR-06 FR-07),Both,Normal,2026-12-09,Sign-in profile and saved listings,Saved state persists and is isolated per user
+DIP-14,Implement employer submission and moderation (FR-09 FR-10),Жиенбек Муслим,Normal,2026-12-16,Pending/approve/reject/expire flow with audit,Status changes record actor/time/reason
+DIP-15,Accessibility and security review (WCAG 2.2 / OWASP ASVS),Сағым Мұхаммеджан,Normal,2026-12-20,Checklist + defect list,No open critical defects
+DIP-16,Run evaluation: retrieval benchmark and usability study,Both,Major,2027-01-15,Results vs baseline in docs/09,Metrics measured under documented conditions
+DIP-17,Prepare pre-defense-2 submission and Git tag,Both,Critical,2027-01-20,Tagged release with summary and known limitations,Tag pre-defense-2 exists; links verified
