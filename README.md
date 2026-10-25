@@ -33,7 +33,7 @@ React + TypeScript (frontend), FastAPI (backend REST API), PostgreSQL (storage a
 ## Links
 
 - YouTrack project: https://jsowkw1.youtrack.cloud/projects/DIP (tasks DIP-1…DIP-17; offline copy: `docs/youtrack_backlog.csv`)
-- Repository: **TBD**
+- Repository: https://github.com/jsowkw1/internship-vacancy-search
 
 ## Open the prototype
 
@@ -53,7 +53,7 @@ The MVP is a modular web application for students and recent graduates in Kazakh
 
 1. Conduct and document 3-5 short discussions with target users, or obtain and record a substantive client agreement.
 2. Confirm the proposed member responsibilities and the 10-week milestone plan with the supervisor.
-3. Create the team's GitHub/GitLab repository and YouTrack project; replace the `TBD` fields in the report and checklist with working links.
+3. Invite the second team member and the supervisor to the GitHub repository and YouTrack project.
 4. Ask the supervisor to review the key decisions and complete the feedback form.
 5. Replace fictional prototype listings with a clearly labelled authorized dataset before any public demonstration.
 6. Capture the required YouTrack screenshots into a single PDF and upload it alongside the unified report using the institution's form.

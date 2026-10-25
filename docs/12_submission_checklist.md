@@ -20,7 +20,7 @@
 
 - Unified report PDF: `project_report.pdf`.
 - YouTrack project: https://jsowkw1.youtrack.cloud/projects/DIP (17 tasks DIP-1…DIP-17 with priority, due date and acceptance criteria). Combined PDF of board/task screenshots: **still to capture**.
-- Repository URL, YouTrack URL, access permissions, participant accounts/contributions, and final role assignments: **TBD**.
+- Repository: https://github.com/jsowkw1/internship-vacancy-search ; YouTrack: https://jsowkw1.youtrack.cloud/projects/DIP. Still TBD: supervisor/committee access, second member's GitHub account and contributions, final role assignments.
 - The supplied announcement gave a deadline of 18:00 on 24 October 2026. The current date is 25 October 2026, so ask the submission coordinator whether late upload is possible or the form can be reopened.
 - Approval form: submit through the institution's form if it is still accepting responses, after replacing every TBD with verified information and obtaining any required signatures.
 
