@@ -6,7 +6,7 @@
 
 Team: Жиенбек Муслим Рахымжанұлы and Сағым Мұхаммеджан Бақытжанұлы (SE-2427).  
 Supervisor: Хармысов Чингис Аблайханович.  
-Package status: **pre-defense draft, 25 October 2026**.
+Package status: **pre-defense-1 submission, 26 October 2026** (Git tag `pre-defense-1`).
 
 ## What is here
 
@@ -41,7 +41,15 @@ Open `prototype/index.html` in a browser. Search, filters, sorting, detail views
 
 ## Project status and evidence
 
-The team and topic are taken from the supplied approval documents; the supervisor name follows the team's clarification. The materials do not claim that user interviews, a client agreement, a GitHub/GitLab repository, a YouTrack project, supervisor review, or team role assignments already exist. Ready-to-fill templates and a proposed role split are included. Interview findings and review feedback must be added after they happen.
+| Area | Status |
+|---|---|
+| Proposal, literature review, system and technology comparisons, requirements, architecture, prototype, evaluation plan | Done (draft for supervisor review) |
+| GitHub repository and YouTrack project with 17 prioritised tasks | Done |
+| User interviews (3-5) | Planned — task DIP-3; templates in `docs/02_relevance_and_user_research.md` |
+| Supervisor feedback | Pending — task DIP-4; form in `docs/11_supervisor_feedback.md` |
+| Application code | Not started — from task DIP-9 |
+
+Interview findings and supervisor feedback are recorded only after they happen; nothing in this repository is invented.
 
 The project problem is currently a **hypothesis**: early-career applicants may need to search across fragmented sources and compare opportunities with inconsistent fields. Official service materials show that some major platforms already support student or internship flows, recommendations, alerts, or aggregated listings. The proposal therefore treats differentiation as unvalidated and focuses on a common early-career search experience, normalized filters, source attribution, and explainable matching.
 
@@ -68,6 +76,11 @@ python -m http.server 8000 --directory prototype
 
 Then open `http://localhost:8000`.
 
-## Repository setup
+## Contribution workflow
 
-This folder is a ready-to-publish project scaffold; it has no remote repository or fabricated commit history. Create a private or public repository under a team-owned account, give the supervisor and committee the access they require, then push this folder. Add real YouTrack issue IDs to task branches and commits as described in `docs/10_project_management.md`.
+1. Pick a YouTrack task (e.g. `DIP-8`) and create a branch `DIP-8-short-description` from `main`.
+2. Commit with your own GitHub account; start each commit message with the task ID (`DIP-8: ...`).
+3. Open a pull request that references the task and says how the change was checked.
+4. The other team member reviews and merges; add the PR link to the YouTrack task.
+
+Details: `docs/10_project_management.md`.

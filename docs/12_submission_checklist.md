@@ -13,13 +13,13 @@
 | Architecture | Context, use case, component Mermaid sources and report figures | Revise after requirements and technical approval |
 | UX prototype | Interactive local HTML mock-up and scenarios | Conduct user walkthrough; replace demo data before public use |
 | Verification/evaluation | Metrics, conditions, baseline, acceptance targets | Execute and report only after implementation |
-| Project management | Roles proposal, relative milestones, risk register, Git/YouTrack workflow | Create actual repo/issues, add deadlines/owners, show progressive contributions |
+| Project management | Roles, milestones, risk register, GitHub repo, YouTrack DIP-1…DIP-17, tag `pre-defense-1` | Progressive contributions from both members via pull requests |
 | Supervisor feedback | Blank feedback record | Ask supervisor to review and record comments/actions |
 
 ## Institutional upload preparation
 
-- Unified report PDF: `project_report.pdf`.
-- YouTrack project: https://jsowkw1.youtrack.cloud/projects/DIP (17 tasks DIP-1…DIP-17 with priority, due date and acceptance criteria). Combined PDF of board/task screenshots: **still to capture**.
+- Unified report PDF: `project_report.pdf` (in the repository root).
+- YouTrack project: https://jsowkw1.youtrack.cloud/projects/DIP (17 tasks DIP-1…DIP-17 with priority, due date and acceptance criteria). Combined PDF of board/task screenshots: `YouTrack_DIP_screenshots.pdf` (prepared, uploaded via the form, not stored in the repository).
 - Repository: https://github.com/jsowkw1/internship-vacancy-search ; YouTrack: https://jsowkw1.youtrack.cloud/projects/DIP. Still TBD: supervisor/committee access, second member's GitHub account and contributions, final role assignments.
 - The supplied announcement gave a deadline of 18:00 on 24 October 2026. The current date is 25 October 2026, so ask the submission coordinator whether late upload is possible or the form can be reopened.
 - Approval form: submit through the institution's form if it is still accepting responses, after replacing every TBD with verified information and obtaining any required signatures.

@@ -13,8 +13,8 @@
 | Students | Жиенбек Муслим Рахымжанұлы; Сағым Мұхаммеджан Бақытжанұлы |
 | Group | SE-2427 |
 | Supervisor | Хармысов Чингис Аблайханович |
-| GitHub/GitLab | TBD - repository not supplied or created |
-| YouTrack | TBD - project not supplied or created |
+| GitHub | https://github.com/jsowkw1/internship-vacancy-search |
+| YouTrack | https://jsowkw1.youtrack.cloud/projects/DIP |
 
 ## Problem statement
 
@@ -47,7 +47,7 @@ Design and implement a web application prototype that helps students and recent 
 - Comparison of 4 existing systems and 3 technical decisions.
 - A modular web application with a vacancy catalogue, structured filtering, vacancy details, saved items, employer submissions, moderation, and a transparent rule-based match explanation.
 - Editable diagrams, a local UX prototype, a test and evaluation plan, and project documentation.
-- A reproducible repository and task history once the team creates the external Git and YouTrack workspaces.
+- A reproducible repository and task history in GitHub and YouTrack.
 
 ## Scope
 

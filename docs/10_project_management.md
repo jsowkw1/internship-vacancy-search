@@ -2,14 +2,14 @@
 
 ## Proposed responsibility split
 
-The division below is a proposal because the team did not provide confirmed assignments. Each student should use an individual account and identifiable commit author details. Both students should review one another's significant changes.
+Each student uses an individual GitHub account and identifiable commit author details. Both students review one another's significant changes through pull requests.
 
 | Student | Proposed primary area | Shared responsibilities |
 |---|---|---|
 | Жиенбек Муслим Рахымжанұлы | Backend/API, data model, authorization, deployment and technical decisions | Interviews, architecture review, documentation, code review, evaluation |
 | Сағым Мұхаммеджан Бақытжанұлы | UX/frontend, search interactions, accessibility and usability materials | Interviews, architecture review, documentation, code review, evaluation |
 
-Confirm this split and reassign any task before creating real tracker issues.
+The split is reflected in the YouTrack project; confirm it with the supervisor at the first review (DIP-4).
 
 ## Relative milestone plan
 
@@ -37,7 +37,7 @@ Weeks are relative and must be aligned with the official academic calendar and s
 7. Tag submitted states `pre-defense-1`, `pre-defense-2`, and `final-pre-defense`; do not move earlier tags.
 8. For each checkpoint, record repository URL, tag, completed work, known limits, open tasks, and access confirmation.
 
-No external repo, issue IDs, task assignments, reviews, tags, or commit history were provided; these are setup instructions, not proof that the workflow has already occurred.
+Current state: repository https://github.com/jsowkw1/internship-vacancy-search , YouTrack project https://jsowkw1.youtrack.cloud/projects/DIP (DIP-1…DIP-17). The `pre-defense-1` tag marks the first submission.
 
 ## Risk register
 
@@ -54,6 +54,6 @@ No external repo, issue IDs, task assignments, reviews, tags, or commit history 
 | Supervisor feedback arrives late | Medium / High | Agree review checkpoints in Week 2; share concise deliverables early | Both |
 | Personal data is collected unnecessarily | Low / High | No CV upload in MVP; minimize profile fields; remove participant identifiers | Both |
 
-## YouTrack task set to create
+## YouTrack tasks
 
-Create real issues after setting up the project. Suggested tasks: validate problem with interviews; approve requirements; approve architecture/stack; implement catalogue and lifecycle; implement search and filters; implement profile and saved items; implement moderation; complete accessibility/security review; run benchmark and usability study; finalize report and pre-defense tag. Copy each acceptance criterion from the corresponding document. Do not use this list as evidence that issues already exist.
+The backlog is in YouTrack project DIP (offline copy: `docs/youtrack_backlog.csv`). Each task names the responsible student, expected outcome, acceptance criteria and due date. A task is moved to Done only when its acceptance criteria are met and the related commit or pull request is linked.
