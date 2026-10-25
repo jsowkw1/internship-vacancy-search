@@ -6,17 +6,85 @@ Use a modular monolith for the MVP. The client calls one REST API. The API enfor
 
 ## System context
 
-![System context diagram](architecture/context.mmd)
+Source: [`architecture/context.mmd`](architecture/context.mmd) · PNG export: [`report_assets/context.png`](../report_assets/context.png)
+
+```mermaid
+flowchart LR
+    seeker[Student / recent graduate]
+    employer[Employer]
+    moderator[Moderator / administrator]
+    source[Authorized source or manual curation]
+    app((Internship and vacancy search web app))
+    external[Original application destination]
+    seeker -->|search, filter, save| app
+    app -->|results and fit explanation| seeker
+    employer -->|submit opportunity| app
+    moderator -->|review, approve, expire| app
+    source -->|authorized records + attribution| app
+    app -->|source URL| external
+```
 
 Actors: job seeker, employer, moderator/admin, and an authorized external listing source. The application provides discovery and curation; application decisions and final submissions remain with the user and original employer.
 
 ## Use cases
 
-![Use case diagram](architecture/use_case.mmd)
+Source: [`architecture/use_case.mmd`](architecture/use_case.mmd) · PNG export: [`report_assets/use_case.png`](../report_assets/use_case.png)
+
+```mermaid
+flowchart LR
+    seeker[Student / recent graduate]
+    employer[Employer]
+    mod[Moderator]
+    subgraph system[Internship and vacancy search system]
+      browse([Browse opportunities])
+      search([Search and filter])
+      detail([View details and match explanation])
+      save([Save opportunity])
+      apply([Open original application link])
+      submit([Submit opportunity])
+      moderate([Approve, reject, expire listing])
+      report([Report inaccurate listing])
+    end
+    seeker --- browse
+    seeker --- search
+    seeker --- detail
+    seeker --- save
+    seeker --- apply
+    seeker --- report
+    employer --- submit
+    mod --- moderate
+```
 
 ## Component diagram
 
-![Component diagram](architecture/component.mmd)
+Source: [`architecture/component.mmd`](architecture/component.mmd) · PNG export: [`report_assets/components.png`](../report_assets/components.png)
+
+```mermaid
+flowchart TB
+    browser[Browser UI<br/>React + TypeScript]
+    api[REST API<br/>FastAPI]
+    auth[Identity and role module]
+    catalog[Opportunity catalogue and lifecycle]
+    search[Search, filters and fit rules]
+    profile[Profile and saved items]
+    moderation[Employer submission and moderation]
+    db[(PostgreSQL)]
+    audit[Moderation audit events]
+    source[Authorized import / manual curation]
+    browser -->|HTTPS JSON| api
+    api --> auth
+    api --> catalog
+    api --> search
+    api --> profile
+    api --> moderation
+    auth --> db
+    catalog --> db
+    search --> db
+    profile --> db
+    moderation --> db
+    moderation --> audit
+    source --> moderation
+```
 
 ## API boundary (draft)
 
