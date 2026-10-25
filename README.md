@@ -6,7 +6,6 @@
 
 Team: Жиенбек Муслим Рахымжанұлы and Сағым Мұхаммеджан Бақытжанұлы (SE-2427).  
 Supervisor: Хармысов Чингис Аблайханович.  
-Package status: **pre-defense-1 submission, 26 October 2026** (Git tag `pre-defense-1`).
 
 ## What is here
 
