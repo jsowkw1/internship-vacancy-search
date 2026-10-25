@@ -6,7 +6,6 @@
 
 Team: Жиенбек Муслим Рахымжанұлы and Сағым Мұхаммеджан Бақытжанұлы (SE-2427).  
 Supervisor: Хармысов Чингис Аблайханович.  
-Package status: **pre-defense draft, 25 October 2026**.
 
 ## What is here
 
