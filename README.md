@@ -1,72 +1,48 @@
-# Internship and Vacancy Search Project
+# Database Schema (DIP-8)
 
-**Diploma project:** Development of a Web Application for Searching Internships and Job Vacancies  
-**Russian:** Разработка веб-приложения для поиска стажировок и вакансий  
-**Kazakh:** Тағылымдамалар мен бос жұмыс орындарын іздеуге арналған веб-қосымшаны әзірлеу
+Initial PostgreSQL schema for the MVP. It implements the minimum domain model from `docs/06_requirements.md`.
 
-Team: Жиенбек Муслим Рахымжанұлы and Сағым Мұхаммеджан Бақытжанұлы (SE-2427).  
-Supervisor: Хармысов Чингис Аблайханович.  
+- `schema.sql` — tables, enums, constraints and indexes.
+- `er_diagram.mmd` — editable ER diagram (Mermaid); rendered below.
 
-## What is here
+## Design decisions
 
-- `project_report.docx` and `project_report.pdf`: unified report covering all 11 assessment components.
-- `docs/`: editable proposal, interview guide, literature matrix, system and technology comparisons, requirements, architecture, evaluation plan, project plan, feedback form, and submission checklist.
-- `prototype/index.html`: interactive, local-only UX prototype. All displayed vacancies are fictional demo records.
-- `docs/architecture/*.mmd`: editable Mermaid diagram sources.
+| Decision | Reason | Requirement |
+|---|---|---|
+| `opportunity.status` enum with `draft → pending → published / rejected → expired → archived` | Pending listings are never public; expired ones leave search but keep history | FR-09, FR-10 |
+| `moderation_event` stores actor, from/to status, reason and time | Every status change is auditable | FR-10 |
+| `source` table with a `permission` column and `opportunity.source_url` | Each listing shows its origin and how it may be used; no scraping without permission | FR-05, NFR-06 |
+| Partial unique index on `source_url` for pending/published listings | Blocks an exact duplicate of an active listing; fuzzy duplicates are flagged by the API for moderators | FR-11 |
+| `search_vector` (generated `tsvector`, `simple` config) with a GIN index | Fast lexical search over title and description; `simple` avoids wrong stemming for Kazakh text | FR-02, NFR-01 |
+| `skill.aliases` array | ru/kk/en synonyms for skills (e.g. «Питон» → Python) | FR-02, risk register |
+| Composite primary key on `saved_opportunity` | One user's shortlist is private and has no duplicates | FR-06 |
+| No CV, gender, age or other sensitive columns | Data minimisation; matching must not use protected characteristics | NFR-04, NFR-08 |
 
-## Selected technologies
+## Load the schema locally
 
-React + TypeScript (frontend), FastAPI (backend REST API), PostgreSQL (storage and full-text search), deployed as a modular monolith. Justification: `docs/05_technology_comparison.md`.
-
-## Repository structure
-
-| Path | Contents |
-|---|---|
-| `docs/` | Proposal, research, literature review, comparisons, requirements, architecture, evaluation plan, project management |
-| `docs/architecture/` | Editable Mermaid diagram sources; PNG exports in `report_assets/` |
-| `prototype/` | Clickable UX prototype |
-| `src/backend/`, `src/frontend/` | Application code (added from task DIP-9) |
-| `tests/` | Automated tests and evaluation materials |
-| `config/` | Configuration examples with placeholder values (`.env.example`) |
-
-## Links
-
-- YouTrack project: https://jsowkw1.youtrack.cloud/projects/DIP (tasks DIP-1…DIP-17; offline copy: `docs/youtrack_backlog.csv`)
-- Repository: https://github.com/jsowkw1/internship-vacancy-search
-
-## Open the prototype
-
-Open `prototype/index.html` in a browser. Search, filters, sorting, detail views, and saved items work locally in the browser. No account, backend, live listings, or real applications are connected.
-
-## Project status and evidence
-
-The team and topic are taken from the supplied approval documents; the supervisor name follows the team's clarification. The materials do not claim that user interviews, a client agreement, a GitHub/GitLab repository, a YouTrack project, supervisor review, or team role assignments already exist. Ready-to-fill templates and a proposed role split are included. Interview findings and review feedback must be added after they happen.
-
-The project problem is currently a **hypothesis**: early-career applicants may need to search across fragmented sources and compare opportunities with inconsistent fields. Official service materials show that some major platforms already support student or internship flows, recommendations, alerts, or aggregated listings. The proposal therefore treats differentiation as unvalidated and focuses on a common early-career search experience, normalized filters, source attribution, and explainable matching.
-
-## Proposed implementation scope
-
-The MVP is a modular web application for students and recent graduates in Kazakhstan. It will provide a normalized catalogue of authorized or employer-submitted opportunities, structured search, filters, detail pages, saved listings, an employer submission flow, moderation, and an explainable rule-based fit indicator. The first academic prototype uses fictional seed data. It does not scrape job boards, parse CVs, make hiring decisions, or claim live vacancy coverage.
-
-## Next actions before external submission
-
-1. Conduct and document 3-5 short discussions with target users, or obtain and record a substantive client agreement.
-2. Confirm the proposed member responsibilities and the 10-week milestone plan with the supervisor.
-3. Invite the second team member and the supervisor to the GitHub repository and YouTrack project.
-4. Ask the supervisor to review the key decisions and complete the feedback form.
-5. Replace fictional prototype listings with a clearly labelled authorized dataset before any public demonstration.
-6. Capture the required YouTrack screenshots into a single PDF and upload it alongside the unified report using the institution's form.
-
-## Starting a local preview
-
-The prototype can be opened directly. For consistent browser storage, run a static server from this directory:
-
-```powershell
-python -m http.server 8000 --directory prototype
+```bash
+createdb internships
+psql -d internships -f docs/database/schema.sql
 ```
 
-Then open `http://localhost:8000`.
+## ER diagram
 
-## Repository setup
+```mermaid
+erDiagram
+    APP_USER ||--o| JOB_SEEKER_PROFILE : has
+    APP_USER ||--o{ EMPLOYER : owns
+    APP_USER ||--o{ SAVED_OPPORTUNITY : saves
+    APP_USER ||--o{ MODERATION_EVENT : performs
+    APP_USER ||--o{ REPORT : files
+    JOB_SEEKER_PROFILE ||--o{ PROFILE_SKILL : lists
+    EMPLOYER ||--o{ OPPORTUNITY : publishes
+    SOURCE ||--o{ OPPORTUNITY : attributes
+    OPPORTUNITY ||--o{ OPPORTUNITY_SKILL : requires
+    OPPORTUNITY ||--o{ SAVED_OPPORTUNITY : "saved in"
+    OPPORTUNITY ||--o{ MODERATION_EVENT : "audited by"
+    OPPORTUNITY ||--o{ REPORT : "reported in"
+    SKILL ||--o{ OPPORTUNITY_SKILL : "used in"
+    SKILL ||--o{ PROFILE_SKILL : "used in"
+```
 
-This folder is a ready-to-publish project scaffold; it has no remote repository or fabricated commit history. Create a private or public repository under a team-owned account, give the supervisor and committee the access they require, then push this folder. Add real YouTrack issue IDs to task branches and commits as described in `docs/10_project_management.md`.
+Full diagram with attributes: `er_diagram.mmd`.

@@ -1,0 +1,83 @@
+erDiagram
+    APP_USER ||--o| JOB_SEEKER_PROFILE : has
+    APP_USER ||--o{ EMPLOYER : owns
+    APP_USER ||--o{ SAVED_OPPORTUNITY : saves
+    APP_USER ||--o{ MODERATION_EVENT : performs
+    APP_USER ||--o{ REPORT : files
+    JOB_SEEKER_PROFILE ||--o{ PROFILE_SKILL : lists
+    EMPLOYER ||--o{ OPPORTUNITY : publishes
+    SOURCE ||--o{ OPPORTUNITY : attributes
+    OPPORTUNITY ||--o{ OPPORTUNITY_SKILL : requires
+    OPPORTUNITY ||--o{ SAVED_OPPORTUNITY : "saved in"
+    OPPORTUNITY ||--o{ MODERATION_EVENT : "audited by"
+    OPPORTUNITY ||--o{ REPORT : "reported in"
+    SKILL ||--o{ OPPORTUNITY_SKILL : "used in"
+    SKILL ||--o{ PROFILE_SKILL : "used in"
+
+    APP_USER {
+        bigint id PK
+        varchar email UK
+        varchar password_hash
+        user_role role
+    }
+    JOB_SEEKER_PROFILE {
+        bigint user_id PK, FK
+        varchar education_stage
+        varchar city
+        work_arrangement work_arrangement
+        opportunity_type desired_type
+    }
+    EMPLOYER {
+        bigint id PK
+        bigint owner_id FK
+        varchar name
+        boolean verified
+    }
+    SOURCE {
+        bigint id PK
+        varchar label
+        text permission
+    }
+    OPPORTUNITY {
+        bigint id PK
+        bigint employer_id FK
+        bigint source_id FK
+        varchar title
+        opportunity_type type
+        varchar city
+        varchar source_url
+        opportunity_status status
+        timestamptz expires_at
+    }
+    SKILL {
+        bigint id PK
+        varchar name UK
+        text_array aliases
+    }
+    OPPORTUNITY_SKILL {
+        bigint opportunity_id PK, FK
+        bigint skill_id PK, FK
+        boolean required
+    }
+    PROFILE_SKILL {
+        bigint user_id PK, FK
+        bigint skill_id PK, FK
+    }
+    SAVED_OPPORTUNITY {
+        bigint user_id PK, FK
+        bigint opportunity_id PK, FK
+        timestamptz saved_at
+    }
+    MODERATION_EVENT {
+        bigint id PK
+        bigint opportunity_id FK
+        bigint actor_id FK
+        opportunity_status to_status
+        text reason
+    }
+    REPORT {
+        bigint id PK
+        bigint opportunity_id FK
+        bigint reporter_id FK
+        report_status status
+    }
